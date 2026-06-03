@@ -4,7 +4,8 @@ mv-*.tar.xz
 mz-*.tar.xz
 cheat-version-description.json
 node_modules/
-cheat-engine/www/cheat/version.js
-cheat-engine/www/cheat/libs/shiki.bundle.mjs
+cheat-engine/www/cheat/init/setup.js
+cheat-engine/www/cheat/init/setup.css
+src/version.ts
 .history
 .vscode

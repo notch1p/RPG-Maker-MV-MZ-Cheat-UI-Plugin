@@ -61,34 +61,18 @@ function applyCheat() {
   // load libs
   //__loadJavaScript("cheat/libs/axios.min.js");
 
-  // add <div id='app'> node for vue
+  // Bootstrap div: MainComponent mounts <v-app> / <v-main> from inside Vue.
   const appDiv = document.createElement("div");
-
   appDiv.id = "app";
-  appDiv.innerHTML = `
-<v-app
-    app
-    dark
-    style="background-color: black;">
-    <v-main
-        dark>
-        <main-component></main-component>
-    </v-main>
-</v-app>
-`;
-
   document.body.appendChild(appDiv);
 
-  // import in head
   document.head.innerHTML += `
 <link href="cheat/css/roboto.css" rel="stylesheet">
 <link href="cheat/css/materialdesignicons.css" rel="stylesheet">
-<link href="cheat/css/vuetify.css" rel="stylesheet">
+<link href="cheat/init/setup.css" rel="stylesheet">
 <link href="cheat/css/main.css" rel="stylesheet">
 `;
 
-  // import in body
-  // __loadJavaScript('cheat/init/setup.js')
   __addScript("module", "cheat/init/setup.js");
 }
 

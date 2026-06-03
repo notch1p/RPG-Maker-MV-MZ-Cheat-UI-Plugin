@@ -1,0 +1,5 @@
+cheat-engine/
+node_modules/
+*.tar.gz
+*.tar.xz
+pnpm-lock.yaml

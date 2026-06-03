@@ -3,15 +3,32 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "vendor:shiki": "node tools/build-shiki.mjs"
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier -w .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@shikijs/core": "^4.0.2",
-    "@shikijs/engine-oniguruma": "^4.0.2",
-    "@shikijs/langs": "^4.0.2",
-    "@shikijs/themes": "^4.0.2",
+    "@eslint/js": "^10.0.1",
+    "@mdi/font": "^7.4.47",
+    "@vitejs/plugin-vue": "^6.0.7",
     "esbuild": "^0.27.4",
-    "shiki": "^4.0.2"
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.9.2",
+    "prettier": "^3.8.3",
+    "rmmz-types": "1.5.0-3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.1",
+    "vite": "^8.0.16",
+    "vue-eslint-parser": "^10.4.1",
+    "vue-tsc": "^3.3.3"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "vue": "^3.5.35",
+    "vuetify": "^4.1.0"
+  }
 }
