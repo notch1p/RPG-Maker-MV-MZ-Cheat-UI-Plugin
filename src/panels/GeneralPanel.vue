@@ -24,7 +24,7 @@ interface EventRow {
   codeText: string;
   commandName: string;
   detail: string;
-  isContinuation: boolean;
+  is4xx: boolean;
   indentPx: number;
 }
 
@@ -127,7 +127,7 @@ function scrollToCurrentEventEntry() {
   if (!el) return;
   el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
-
+/* really is DataCommandExt */
 function formatEventListEntries(list: DataCommand[]): EventRow[] {
   if (list.length === 0) return [];
   return list.map((entry, index) => {
@@ -138,7 +138,7 @@ function formatEventListEntries(list: DataCommand[]): EventRow[] {
       codeText: entry.code.toString(),
       commandName: formatted.name,
       detail: formatted.detail,
-      isContinuation: formatted.is4xx,
+      is4xx: formatted.is4xx,
       indentPx: Math.max(0, indent) * 16,
     };
   });
@@ -586,9 +586,7 @@ onBeforeUnmount(() => {
                 >
                   <div
                     :class="
-                      row.isContinuation
-                        ? 'text-grey-lighten-1'
-                        : 'font-weight-bold'
+                      row.is4xx ? 'text-grey-lighten-1' : 'font-weight-bold'
                     "
                   >
                     {{ row.commandName }}
