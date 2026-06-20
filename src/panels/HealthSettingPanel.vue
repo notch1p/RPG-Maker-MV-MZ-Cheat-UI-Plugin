@@ -21,8 +21,8 @@ const enemy = ref<Battler[]>([]);
 const party = ref<Battler[]>([]);
 
 function initializeVariables() {
-  enemy.value = $gameTroop.members().map((m) => m);
-  party.value = $gameParty.members().map((m) => m);
+  enemy.value = $gameTroop.members();
+  party.value = $gameParty.members();
   disableRandomEncounter.value = BattleCheat.isDisableRandomEncounter();
 }
 

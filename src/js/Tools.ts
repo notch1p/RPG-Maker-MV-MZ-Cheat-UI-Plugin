@@ -10,3 +10,22 @@ export function cloneObject<T>(obj: T): T {
   }
   return clone as T;
 }
+
+/**
+  - for any `x : T` in some array `xs : T[]`,
+  ```
+  fn(x, i) : U         => returns 
+           | undefined => skips
+  ```
+ */
+export function filterMap<T, U>(
+  arr: readonly T[],
+  fn: (x: T, i: number) => U | undefined,
+): U[] {
+  const out: U[] = [];
+  for (let i = 0; i < arr.length; ++i) {
+    const v = fn(arr[i], i);
+    if (v !== undefined) out.push(v);
+  }
+  return out;
+}

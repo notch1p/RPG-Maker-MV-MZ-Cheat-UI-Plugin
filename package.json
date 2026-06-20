@@ -26,7 +26,7 @@
     "vue-eslint-parser": "^10.4.1",
     "vue-tsc": "^3.3.3"
   },
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@11.8.0",
   "dependencies": {
     "vue": "^3.5.35",
     "vuetify": "^4.1.0"

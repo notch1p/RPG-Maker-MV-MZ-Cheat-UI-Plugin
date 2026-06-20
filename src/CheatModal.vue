@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
+import { filterMap } from "@/js/Tools";
 import GeneralPanel from "@/panels/GeneralPanel.vue";
 import HealthSettingPanel from "@/panels/HealthSettingPanel.vue";
 import StatsSettingPanel from "@/panels/StatsSettingPanel.vue";
+import SkillSettingPanel from "@/panels/SkillSettingPanel.vue";
 import ItemSettingPanel from "@/panels/ItemSettingPanel.vue";
 import WeaponSettingPanel from "@/panels/WeaponSettingPanel.vue";
 import ArmorSettingPanel from "@/panels/ArmorSettingPanel.vue";
@@ -32,6 +34,7 @@ const panelComponents: Record<string, ReturnType<typeof Object>> = {
   "general-panel": GeneralPanel,
   "health-setting-panel": HealthSettingPanel,
   "stats-setting-panel": StatsSettingPanel,
+  "skill-setting-panel": SkillSettingPanel,
   "item-setting-panel": ItemSettingPanel,
   "weapon-setting-panel": WeaponSettingPanel,
   "armor-setting-panel": ArmorSettingPanel,
@@ -52,6 +55,11 @@ const navTreeItems: NavItem[] = [
     name: "等级/属性",
     icon: "mdi-sword-cross",
     component: "stats-setting-panel",
+  },
+  {
+    name: "技能",
+    icon: "mdi-book-open-page-variant",
+    component: "skill-setting-panel",
   },
   {
     name: "物品",
@@ -145,9 +153,9 @@ onMounted(() => {
   const item = componentNameToNavItem.value[component];
   navTreeModel.value = item ? [item.name] : [];
   // Open all parent groups so nested items are visible.
-  navTreeOpened.value = navTreeItems
-    .filter((n) => n.children)
-    .map((n) => n.name);
+  navTreeOpened.value = filterMap(navTreeItems, (n) =>
+    n.children ? n.name : undefined,
+  );
 });
 </script>
 
@@ -157,7 +165,7 @@ onMounted(() => {
     class="z-index-cheat-0"
     width="80vw"
     height="90vh"
-    style="max-width: 775px; max-height: 550px"
+    style="max-width: 800px; max-height: 600px"
   >
     <div class="d-flex fill-height ma-0 pa-0">
       <div

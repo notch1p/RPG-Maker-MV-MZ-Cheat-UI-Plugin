@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DataArmor, DataItem, DataWeapon } from "rmmz-types";
 import { computed, markRaw, ref, toRaw, watch } from "vue";
+import { filterMap } from "@/js/Tools";
 
 interface TableHeader {
   title: string;
@@ -41,20 +42,19 @@ function initializeVariables() {
   tableHeaders.value = props.headers.slice(0);
   tableHeaders.value.push({ title: "数量", key: "amount" });
 
-  tableItems.value = props.items
-    .filter((item) => !!item)
-    .map((item) => {
-      const tableItem = props.asTableData(item) as TableRow;
-      // RMMZ's DataManager.isItem/isWeapon/isArmor uses reference equality
-      // against $dataItems/$dataWeapons/$dataArmors. Parent passes the
-      // reactive items array, so `item` here is already a Proxy.
-      // toRaw unwraps it; markRaw prevents Vue from re-wrapping when we
-      // stash it into the reactive tableItems.value.
-      const raw = markRaw(toRaw(item));
-      tableItem.gameItem = raw;
-      tableItem.amount = $gameParty.numItems(raw);
-      return tableItem;
-    });
+  tableItems.value = filterMap(props.items, (item) => {
+    if (!item) return undefined;
+    // RMMZ's DataManager.isItem/isWeapon/isArmor uses reference equality
+    // against $dataItems/$dataWeapons/$dataArmors. Parent passes the
+    // reactive items array, so `item` here is already a Proxy.
+    // toRaw unwraps it; markRaw prevents Vue from re-wrapping when we
+    // stash it into the reactive tableItems.value.
+    const tableItem = props.asTableData(item) as TableRow;
+    const raw = markRaw(toRaw(item));
+    tableItem.gameItem = raw;
+    tableItem.amount = $gameParty.numItems(raw);
+    return tableItem;
+  });
 }
 
 watch(() => props.items, initializeVariables, { immediate: true });

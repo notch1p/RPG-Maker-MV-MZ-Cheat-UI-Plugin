@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DataMapInfo } from "rmmz-types";
 import { computed, onMounted, ref } from "vue";
+import { filterMap } from "@/js/Tools";
 
 interface MapRow {
   _mapInfo: any;
@@ -44,20 +45,19 @@ async function getMapNames(dataMapInfos: DataMapInfo[]): Promise<string[]> {
 
 async function initializeVariables() {
   const mapNames = await getMapNames($dataMapInfos);
-  maps.value = $dataMapInfos
-    .filter((mapInfo) => !!mapInfo)
-    .map((mapInfo) => {
-      const fullPathIds: number[] = [];
-      getMapAncestors(mapInfo!.id, fullPathIds);
-      const fullPath = fullPathIds.map((id) => mapNames[id]);
-      return {
-        _mapInfo: mapInfo,
-        id: mapInfo!.id,
-        fullPath,
-        fullPathJoin: fullPath.join(" / "),
-        name: mapNames[mapInfo!.id],
-      };
-    });
+  maps.value = filterMap($dataMapInfos, (mapInfo) => {
+    if (!mapInfo) return undefined;
+    const fullPathIds: number[] = [];
+    getMapAncestors(mapInfo.id, fullPathIds);
+    const fullPath = fullPathIds.map((id) => mapNames[id]);
+    return {
+      _mapInfo: mapInfo,
+      id: mapInfo.id,
+      fullPath,
+      fullPathJoin: fullPath.join(" / "),
+      name: mapNames[mapInfo.id],
+    };
+  });
 }
 
 function teleportLocation(mapId: number, x: number, y: number) {
